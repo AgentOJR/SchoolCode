@@ -1,6 +1,7 @@
 /*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
+ * Owen Rabe
+ * Apr 18 23
+ * Menu to manage test scores of students and some other related statistics
  */
 package rabearraylistexercise3;
 
@@ -333,33 +334,51 @@ public class RabeArrayListExercise3 extends javax.swing.JFrame {
     private void highAvgTxtActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_highAvgTxtActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_highAvgTxtActionPerformed
-
+/**
+ * event listener for when the add button is pressed
+ * @param evt 
+ */
     private void btnAddActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAddActionPerformed
         students.add(new Student(nameTxtField.getText(),Integer.parseInt(test1Txt.getText()),Integer.parseInt(test2Txt.getText()),Integer.parseInt(test3Txt.getText())));
         currentIndex = students.size() - 1;
         updateStuff();
     }//GEN-LAST:event_btnAddActionPerformed
-
+/**
+ * event listener for when the back button is pressed
+ * @param evt 
+ */
     private void btnBackActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBackActionPerformed
         currentIndex--;
         updateStuff();
     }//GEN-LAST:event_btnBackActionPerformed
-
+/**
+ * event listener for when the forward button is pressed
+ * @param evt 
+ */
     private void btnForwardActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnForwardActionPerformed
         currentIndex++;
         updateStuff();
     }//GEN-LAST:event_btnForwardActionPerformed
-
+/**
+ * event listener for when the first button is pressed
+ * @param evt 
+ */
     private void btnFirstActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnFirstActionPerformed
         currentIndex = 0;
         updateStuff();
     }//GEN-LAST:event_btnFirstActionPerformed
-
+/**
+ * event listener for when the last button is pressed
+ * @param evt 
+ */
     private void btnLastActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLastActionPerformed
         currentIndex = students.size() - 1;
         updateStuff();
     }//GEN-LAST:event_btnLastActionPerformed
-
+/**
+ * event listener for when the modify button is pressed
+ * @param evt 
+ */
     private void btnModifyActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnModifyActionPerformed
         Student s = ((Student) students.get(currentIndex));
         s.setName(nameTxtField.getText());
@@ -463,6 +482,9 @@ public class RabeArrayListExercise3 extends javax.swing.JFrame {
     private javax.swing.JTextField test3Txt;
     // End of variables declaration//GEN-END:variables
 
+    /**
+     * method to set calculate the highest average student and what their average is, then set it to the required fields
+     */
     private void setHighAvg() {
         int highScore = 0;
         String highScoreName = "";
@@ -475,7 +497,9 @@ public class RabeArrayListExercise3 extends javax.swing.JFrame {
             highAvgNameTxt.setText(highScoreName);
         }
     }
-
+/**
+ * method to calculate the highest test score and get the name of the student with that test, then set info to required fields
+ */
     private void setHighScore() {
         int highScore = 0;
         String highScoreName = "";
