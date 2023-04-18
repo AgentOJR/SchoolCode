@@ -62,7 +62,7 @@ public class Student {
         updateAvg();
     }
     /**
-     * method to give the stduents name
+     * method to give the students name
      * @return the name
      */
     public String getName(){
