@@ -26,7 +26,7 @@ public class RabeRecursionExercise6 {
         p.move(x-r,y+r);
     }
     public static void fractal(int x,int y,int r,StandardPen p){
-        if(r==0){
+        if(r<2){
             
         }else{
             drawSquare(p,x,y,r);
