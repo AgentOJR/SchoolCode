@@ -14,8 +14,8 @@ import java.util.Scanner;
  */
 public class RabeSearchingExercise extends javax.swing.JFrame {
 
-    ArrayList books = new ArrayList();
-    int numBooks;
+    ArrayList<Book> books = new ArrayList();
+    int numBooks,linCount,binCount;
     public RabeSearchingExercise() {
         initComponents();
     }
@@ -32,6 +32,33 @@ public class RabeSearchingExercise extends javax.swing.JFrame {
         }
         numBooks = books.size();
     }
+    public boolean linSearch(int rNum){
+        for (int i = 0; i < numBooks; i++) {
+            linCount++;
+            if((books.get(i)).getRef()==rNum){
+                return true;
+            }
+            
+        }
+        return false;
+    }
+    public boolean binSearch(int left,int right, int x){
+    int middle;
+    binCount++;
+    if(left> right){
+        return false;
+    }
+    middle = (left + right)/2;
+    if(books.get(middle).getRef() == x){
+        return true;
+    }
+    if(books.get(middle).getRef() > x){
+        return binSearch(left,middle -1,x);
+    }
+    else{
+        return binSearch(middle+1,right,x);
+    }
+}
 
     /**
      * This method is called from within the constructor to initialize the form.
