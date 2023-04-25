@@ -16,6 +16,7 @@ public class RabeSearchingExercise extends javax.swing.JFrame {
 
     ArrayList<Book> books = new ArrayList();
     int numBooks,linCount,binCount;
+    String wantedNameBin,wantedNameLin;
     public RabeSearchingExercise() {
         initComponents();
     }
@@ -50,6 +51,7 @@ public class RabeSearchingExercise extends javax.swing.JFrame {
     }
     middle = (left + right)/2;
     if(books.get(middle).getRef() == x){
+        wantedNameBin = books.get(middle).getName();
         return true;
     }
     if(books.get(middle).getRef() > x){
@@ -96,6 +98,11 @@ public class RabeSearchingExercise extends javax.swing.JFrame {
 
         btnSearch.setFont(new java.awt.Font("Times New Roman", 0, 13)); // NOI18N
         btnSearch.setText("Find it!");
+        btnSearch.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnSearchActionPerformed(evt);
+            }
+        });
 
         jLabel4.setFont(new java.awt.Font("Times New Roman", 0, 13)); // NOI18N
         jLabel4.setText("Binary Search:");
@@ -160,6 +167,16 @@ public class RabeSearchingExercise extends javax.swing.JFrame {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void btnSearchActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSearchActionPerformed
+        int wanted = Integer.parseInt(wantedField.getText());
+        binCount = 0;
+        linCount = 0;
+        if(binSearch(wanted,0,numBooks-1)){
+            linSearch(wanted);
+            
+        }
+    }//GEN-LAST:event_btnSearchActionPerformed
 
     /**
      * @param args the command line arguments
