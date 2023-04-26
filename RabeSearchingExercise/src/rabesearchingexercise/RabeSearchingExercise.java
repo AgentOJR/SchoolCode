@@ -174,7 +174,11 @@ public class RabeSearchingExercise extends javax.swing.JFrame {
         linCount = 0;
         if(binSearch(wanted,0,numBooks-1)){
             linSearch(wanted);
-            
+            binField.setText("Found: " + wantedNameBin + ". " + binCount + " books processed.");
+            linField.setText("Found: " + wantedNameLin + ". " + linCount + " books processed.");
+        }else{
+            binField.setText("Book #" + wanted + " not found.");
+            linField.setText("Book #" + wanted + " not found.");
         }
     }//GEN-LAST:event_btnSearchActionPerformed
 
