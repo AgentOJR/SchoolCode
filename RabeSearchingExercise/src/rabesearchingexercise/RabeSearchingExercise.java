@@ -1,6 +1,7 @@
 /*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
+ * Owen Rabe
+ * Apr 26 23
+ * program to search file for book by refrence number
  */
 package rabesearchingexercise;
 
@@ -19,10 +20,15 @@ public class RabeSearchingExercise extends javax.swing.JFrame {
     String wantedNameBin,wantedNameLin;
     public RabeSearchingExercise() {
         initComponents();
+        loadArray();
+        System.out.println(books);
     }
-    public void loadArray(){
+    /**
+     * Method to load the array with book objects based on the given data file.
+     */
+    private void loadArray(){
         try {
-            File f = new File("src/BookList.txt");
+            File f = new File("src/rabesearchingexercise/BookList.txt");
             Scanner s = new Scanner(f);
             while(s.hasNextLine()){
                 Book b = new Book(Integer.parseInt(s.nextLine()),s.nextLine());
@@ -31,34 +37,54 @@ public class RabeSearchingExercise extends javax.swing.JFrame {
             
         } catch (Exception e) {
         }
+        //getting the number of books in the list
         numBooks = books.size();
     }
+    /**
+     * method to perform a linear search to find the book
+     * @param rNum the refreence number of the wanted book
+     * @return if the book was found or not
+     */
     public boolean linSearch(int rNum){
+        //loop while there are still books to check
         for (int i = 0; i < numBooks; i++) {
             linCount++;
+            //if the checked book matches the wanted rnum
             if((books.get(i)).getRef()==rNum){
+                wantedNameLin = books.get(i).getName();
                 return true;
             }
             
         }
         return false;
     }
-    public boolean binSearch(int left,int right, int x){
+    /**
+     * Method to perform a binary search to find the book
+     * @param left the smallest value to check 
+     * @param right the rightmost(biggest) number to check 
+     * @param wanted the rnum that the user wants
+     * @return if the book was found
+     */
+    public boolean binSearch(int left,int right, int wanted){
     int middle;
     binCount++;
-    if(left> right){
+    //if there are no more books to search
+    if(left > right){
         return false;
     }
+    //find the midground between the leftmost and rightmost possible
     middle = (left + right)/2;
-    if(books.get(middle).getRef() == x){
+    //if the middle book has the requested rnum
+    if(books.get(middle).getRef() == wanted){
         wantedNameBin = books.get(middle).getName();
         return true;
     }
-    if(books.get(middle).getRef() > x){
-        return binSearch(left,middle -1,x);
+    //check to see if the wanted rnum is greater or less than the one we just checked, eliminate half accordingly
+    if(books.get(middle).getRef() > wanted){
+        return binSearch(left,middle -1,wanted);
     }
     else{
-        return binSearch(middle+1,right,x);
+        return binSearch(middle+1,right,wanted);
     }
 }
 
@@ -167,16 +193,24 @@ public class RabeSearchingExercise extends javax.swing.JFrame {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
-
+/**
+ * listener for when the button is hit
+ * @param evt 
+ */
     private void btnSearchActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSearchActionPerformed
+        //taking the number the user wants from the field
         int wanted = Integer.parseInt(wantedField.getText());
+        //setting counts to 0
         binCount = 0;
         linCount = 0;
-        if(binSearch(wanted,0,numBooks-1)){
-            linSearch(wanted);
+        //running the searches, if one works run the other and update txt fields
+        if(linSearch(wanted)){
+            binSearch(0,numBooks-1,wanted);
             binField.setText("Found: " + wantedNameBin + ". " + binCount + " books processed.");
             linField.setText("Found: " + wantedNameLin + ". " + linCount + " books processed.");
-        }else{
+        }
+        //otherwise update text fields and say neither worked
+        else{
             binField.setText("Book #" + wanted + " not found.");
             linField.setText("Book #" + wanted + " not found.");
         }
