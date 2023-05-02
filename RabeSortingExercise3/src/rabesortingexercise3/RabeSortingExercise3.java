@@ -18,7 +18,7 @@ public class RabeSortingExercise3 {
             Scanner s = new Scanner(f);
             loadArray(s);
             insertSort(a.length);
-            for (int i = 0; i < 1000; i++) {
+            for (int i = 999; i >=0; i--) {
                 System.out.println(a[i]);
             }
         } catch (Exception e) {
