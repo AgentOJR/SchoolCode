@@ -15,17 +15,22 @@ public class RabeSortingExercise2 {
     static String[] a = new String[1000];
 
     public static void main(String[] args) {
+        long timeStart;
+        long timeFin;
         try {
             File f = new File("src/rabesortingexercise2/randomWords.txt");
             Scanner s = new Scanner(f);
             //method to fill the array a with the values from the data file f
             fillArray(s);
+            timeStart = System.nanoTime();
             //method to sort the data file aphabetically in ascending order
             bubbleSort(a.length);
+            timeFin = System.nanoTime();
             //printing the now sorted array
             for (int i = 0; i < a.length; i++) {
                 System.out.println(a[i]);
             }
+            System.out.println("Time elapsed: " + (timeFin - timeStart) / 1000000000.0 + " seconds.");
         } catch (FileNotFoundException e) {
             System.out.println("Error: " + e);
         }
