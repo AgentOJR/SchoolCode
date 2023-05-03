@@ -6,49 +6,70 @@
 package rabesortingexercise2;
 
 import java.io.File;
+import java.io.FileNotFoundException;
 import java.util.Scanner;
-
 
 public class RabeSortingExercise2 {
 
+    //array used throughout program, makes more sense to declare globally especially in case we were to switch to another sorting algorithm
     static String[] a = new String[1000];
+
     public static void main(String[] args) {
         try {
             File f = new File("src/rabesortingexercise2/randomWords.txt");
             Scanner s = new Scanner(f);
+            //method to fill the array a with the values from the data file f
             fillArray(s);
+            //method to sort the data file aphabetically in ascending order
             bubbleSort(a.length);
+            //printing the now sorted array
             for (int i = 0; i < a.length; i++) {
                 System.out.println(a[i]);
             }
-        } catch (Exception e) {
+        } catch (FileNotFoundException e) {
+            System.out.println("Error: " + e);
         }
     }
-    public static void fillArray(Scanner s){
+
+    /**
+     * filling the array with the strings in the data file
+     *
+     * @param s the scanner object hooked up to the data file
+     */
+    public static void fillArray(Scanner s) {
         int i = 0;
-        while(s.hasNextLine()){
+        while (s.hasNextLine()) {
             a[i] = s.nextLine();
             i++;
         }
-            
+
     }
-    public static void bubbleSort(int numItems){
+
+    /**
+     * algorithm to sort the strings using bubble sort
+     *
+     * @param numItems the number of strings in the array
+     */
+    public static void bubbleSort(int numItems) {
         int bottom = numItems - 1;
         String temp;
         boolean sw = true;
-        while(sw){
+        //loops until it doesn't swap anything around anymore meaning everything must be in place.
+        while (sw) {
+            //var that says if a swap has taken place
             sw = false;
-            for(int j = 0;j<bottom;j++){
-                if (a[j].compareTo(a[j+1])> 0) {
+            //loop to continuously put the lexographically smaller string to the right until it hits the end
+            for (int j = 0; j < bottom; j++) {
+                if (a[j].compareTo(a[j + 1]) > 0) {
                     temp = a[j];
-                    a[j] = a[j+1];
-                    a[j+1] = temp;
+                    a[j] = a[j + 1];
+                    a[j + 1] = temp;
                     sw = true;
                 }
-                
+
             }
-            bottom = bottom -1;
+            bottom = bottom - 1;
         }
     }
-    
+
 }
