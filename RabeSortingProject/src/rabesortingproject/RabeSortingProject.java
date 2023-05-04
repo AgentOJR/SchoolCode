@@ -14,7 +14,7 @@ public class RabeSortingProject extends javax.swing.JFrame {
     
     public RabeSortingProject() {
         initComponents();
-        displayedSort.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Insertion", "Bubble", "Quick"}));
+        displayedSort.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Selection", "Bubble", "Quick"}));
     }
 private static int nums1000[];
 private static int nums10[];
@@ -200,8 +200,8 @@ private static int nums10[];
      *
      * @param numItems the number of strings in the array
      */
-    public static void ascBubbleSort(int[] nums) {
-        int bottom = 999;
+    public static void ascBubbleSort(int[] nums,int numItems) {
+        int bottom = numItems -1;
         int temp;
         boolean sw = true;
         //loops until it doesn't swap anything around anymore meaning everything must be in place.
@@ -219,6 +219,51 @@ private static int nums10[];
 
             }
             bottom = bottom - 1;
+        }
+    }
+    public static void descBubbleSort(int[] nums,int numItems) {
+        int bottom = numItems-1;
+        int temp;
+        boolean sw = true;
+        //loops until it doesn't swap anything around anymore meaning everything must be in place.
+        while (sw) {
+            //var that says if a swap has taken place
+            sw = false;
+            //loop to continuously put the lexographically smaller string to the right until it hits the end
+            for (int j = 0; j > bottom; j++) {
+                if (nums[j] < nums[j + 1] ) {
+                    temp = nums[j];
+                    nums[j] = nums[j + 1];
+                    nums[j + 1] = temp;
+                    sw = true;
+                }
+
+            }
+            bottom = bottom - 1;
+        }
+    }
+    public static void ascSelectSort(int[] nums,int numItems){
+        int temp;
+        for (int i = 0; i < numItems - 1; i++) {
+            for (int j = i+1; j < numItems; j++) {
+                if(nums[i] > nums[j]){
+                    temp = nums[i];
+                    nums[i] = nums[j];
+                    nums[j] = temp;
+                }
+            }
+        }
+    }
+    public static void descSelectSort(int[] nums,int numItems){
+        int temp;
+        for (int i = 0; i < numItems - 1; i++) {
+            for (int j = i+1; j < numItems; j++) {
+                if(nums[i] < nums[j]){
+                    temp = nums[i];
+                    nums[i] = nums[j];
+                    nums[j] = temp;
+                }
+            }
         }
     }
     public static void fillArrays(){
