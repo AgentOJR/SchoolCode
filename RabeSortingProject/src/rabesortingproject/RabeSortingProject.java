@@ -8,16 +8,16 @@ package rabesortingproject;
 import java.io.File;
 import java.util.Scanner;
 
-
 public class RabeSortingProject extends javax.swing.JFrame {
 
-    
     public RabeSortingProject() {
         initComponents();
-        displayedSort.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Selection", "Bubble", "Quick"}));
+        displayedSort.setModel(new javax.swing.DefaultComboBoxModel<>(new String[]{"Selection", "Bubble", "Quick"}));
+        fillArrays();
     }
-private static int nums1000[];
-private static int nums10[];
+    private static int nums1000[] = new int[1000];
+    private static int nums10[] = new int[10];
+
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -195,13 +195,13 @@ private static int nums10[];
     private void displayedSortActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_displayedSortActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_displayedSortActionPerformed
-/**
+    /**
      * algorithm to sort the strings using bubble sort
      *
      * @param numItems the number of strings in the array
      */
-    public static void ascBubbleSort(int[] nums,int numItems) {
-        int bottom = numItems -1;
+    public static void ascBubbleSort(int[] nums, int numItems) {
+        int bottom = numItems - 1;
         int temp;
         boolean sw = true;
         //loops until it doesn't swap anything around anymore meaning everything must be in place.
@@ -210,7 +210,7 @@ private static int nums10[];
             sw = false;
             //loop to continuously put the lexographically smaller string to the right until it hits the end
             for (int j = 0; j < bottom; j++) {
-                if (nums[j]- nums[j + 1] > 0) {
+                if (nums[j] - nums[j + 1] > 0) {
                     temp = nums[j];
                     nums[j] = nums[j + 1];
                     nums[j + 1] = temp;
@@ -221,8 +221,9 @@ private static int nums10[];
             bottom = bottom - 1;
         }
     }
-    public static void descBubbleSort(int[] nums,int numItems) {
-        int bottom = numItems-1;
+
+    public static void descBubbleSort(int[] nums, int numItems) {
+        int bottom = numItems - 1;
         int temp;
         boolean sw = true;
         //loops until it doesn't swap anything around anymore meaning everything must be in place.
@@ -231,7 +232,7 @@ private static int nums10[];
             sw = false;
             //loop to continuously put the lexographically smaller string to the right until it hits the end
             for (int j = 0; j > bottom; j++) {
-                if (nums[j] < nums[j + 1] ) {
+                if (nums[j] < nums[j + 1]) {
                     temp = nums[j];
                     nums[j] = nums[j + 1];
                     nums[j + 1] = temp;
@@ -242,11 +243,12 @@ private static int nums10[];
             bottom = bottom - 1;
         }
     }
-    public static void ascSelectSort(int[] nums,int numItems){
+
+    public static void ascSelectSort(int[] nums, int numItems) {
         int temp;
         for (int i = 0; i < numItems - 1; i++) {
-            for (int j = i+1; j < numItems; j++) {
-                if(nums[i] > nums[j]){
+            for (int j = i + 1; j < numItems; j++) {
+                if (nums[i] > nums[j]) {
                     temp = nums[i];
                     nums[i] = nums[j];
                     nums[j] = temp;
@@ -254,11 +256,12 @@ private static int nums10[];
             }
         }
     }
-    public static void descSelectSort(int[] nums,int numItems){
+
+    public static void descSelectSort(int[] nums, int numItems) {
         int temp;
         for (int i = 0; i < numItems - 1; i++) {
-            for (int j = i+1; j < numItems; j++) {
-                if(nums[i] < nums[j]){
+            for (int j = i + 1; j < numItems; j++) {
+                if (nums[i] < nums[j]) {
                     temp = nums[i];
                     nums[i] = nums[j];
                     nums[j] = temp;
@@ -266,14 +269,70 @@ private static int nums10[];
             }
         }
     }
-    public static void fillArrays(){
+
+    public static void ascQuickSort(int a[], int left, int right) {
+
+        if (left >= right) {
+            return;
+        }
+        int i = left;
+        int j = right;
+        int temp;
+        int pivot = a[(left + right) / 2];
+        while (i < j) {
+            while (a[i] < pivot) {
+                i++;
+            }
+            while (pivot < a[j]) {
+                j--;
+            }
+            if (i <= j) {
+                temp = a[i];
+                a[i] = a[j];
+                a[j] = temp;
+                i++;
+                j--;
+            }
+        }
+        ascQuickSort(a, left, j);
+        ascQuickSort(a, i, right);
+    }
+    public static void descQuickSort(int a[], int left, int right) {
+
+        if (left >= right) {
+            return;
+        }
+        int i = left;
+        int j = right;
+        int temp;
+        int pivot = a[(left + right) / 2];
+        while (i < j) {
+            while (a[i] < pivot) {
+                i++;
+            }
+            while (pivot < a[j]) {
+                j--;
+            }
+            if (i >= j) {
+                temp = a[i];
+                a[i] = a[j];
+                a[j] = temp;
+                i++;
+                j--;
+            }
+        }
+        descQuickSort(a, left, j);
+        descQuickSort(a, i, right);
+    }
+
+    public static void fillArrays() {
         File f = new File("src/rabesortingproject/10nums.txt");
         try {
             Scanner s = new Scanner(f);
             for (int i = 0; i < 10; i++) {
                 nums10[i] = Integer.parseInt(s.nextLine());
             }
-            f = new File("src/rabesortingproject/1000nums.txt");
+            f = new File("src/rabesortingproject/10000nums.txt");
             s = new Scanner(f);
             for (int i = 0; i < 1000; i++) {
                 nums1000[i] = Integer.parseInt(s.nextLine());
@@ -282,6 +341,7 @@ private static int nums10[];
             System.out.println("Error: " + e);
         }
     }
+
     /**
      * @param args the command line arguments
      */
