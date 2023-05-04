@@ -5,7 +5,8 @@
  */
 package rabesortingproject;
 
-import javax.swing.JComboBox;
+import java.io.File;
+import java.util.Scanner;
 
 
 public class RabeSortingProject extends javax.swing.JFrame {
@@ -15,8 +16,8 @@ public class RabeSortingProject extends javax.swing.JFrame {
         initComponents();
         displayedSort.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Insertion", "Bubble", "Quick"}));
     }
-private int nums1000[];
-private int nums10[];
+private static int nums1000[];
+private static int nums10[];
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -221,7 +222,20 @@ private int nums10[];
         }
     }
     public static void fillArrays(){
-        
+        File f = new File("src/rabesortingproject/10nums.txt");
+        try {
+            Scanner s = new Scanner(f);
+            for (int i = 0; i < 10; i++) {
+                nums10[i] = Integer.parseInt(s.nextLine());
+            }
+            f = new File("src/rabesortingproject/1000nums.txt");
+            s = new Scanner(f);
+            for (int i = 0; i < 1000; i++) {
+                nums1000[i] = Integer.parseInt(s.nextLine());
+            }
+        } catch (Exception e) {
+            System.out.println("Error: " + e);
+        }
     }
     /**
      * @param args the command line arguments
