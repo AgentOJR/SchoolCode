@@ -5,14 +5,18 @@
  */
 package rabesortingproject;
 
+import javax.swing.JComboBox;
+
 
 public class RabeSortingProject extends javax.swing.JFrame {
 
     
     public RabeSortingProject() {
         initComponents();
+        displayedSort.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Insertion", "Bubble", "Quick"}));
     }
-
+private int nums1000[];
+private int nums10[];
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -32,7 +36,8 @@ public class RabeSortingProject extends javax.swing.JFrame {
         btnAscend = new javax.swing.JRadioButton();
         btnDescend = new javax.swing.JRadioButton();
         jLabel4 = new javax.swing.JLabel();
-        displayedSort = new javax.swing.JComboBox<>();
+        String[] sorts = {"Bubble","Insertion","Quick"};
+        displayedSort = new javax.swing.JComboBox<>(sorts);
         btnSort = new javax.swing.JButton();
         jLabel5 = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
@@ -52,6 +57,7 @@ public class RabeSortingProject extends javax.swing.JFrame {
         jLabel2.setText("Amount of Numbers to Sort:");
 
         numBtns.add(btn10);
+        btn10.setSelected(true);
         btn10.setText("10");
 
         numBtns.add(btn1000);
@@ -60,6 +66,7 @@ public class RabeSortingProject extends javax.swing.JFrame {
         jLabel3.setText("Sort Order:");
 
         ascDescBtns.add(btnAscend);
+        btnAscend.setSelected(true);
         btnAscend.setText("Ascending");
 
         ascDescBtns.add(btnDescend);
@@ -187,7 +194,35 @@ public class RabeSortingProject extends javax.swing.JFrame {
     private void displayedSortActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_displayedSortActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_displayedSortActionPerformed
+/**
+     * algorithm to sort the strings using bubble sort
+     *
+     * @param numItems the number of strings in the array
+     */
+    public static void ascBubbleSort(int[] nums) {
+        int bottom = 999;
+        int temp;
+        boolean sw = true;
+        //loops until it doesn't swap anything around anymore meaning everything must be in place.
+        while (sw) {
+            //var that says if a swap has taken place
+            sw = false;
+            //loop to continuously put the lexographically smaller string to the right until it hits the end
+            for (int j = 0; j < bottom; j++) {
+                if (nums[j]- nums[j + 1] > 0) {
+                    temp = nums[j];
+                    nums[j] = nums[j + 1];
+                    nums[j + 1] = temp;
+                    sw = true;
+                }
 
+            }
+            bottom = bottom - 1;
+        }
+    }
+    public static void fillArrays(){
+        
+    }
     /**
      * @param args the command line arguments
      */
