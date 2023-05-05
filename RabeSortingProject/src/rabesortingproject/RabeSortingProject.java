@@ -15,8 +15,9 @@ public class RabeSortingProject extends javax.swing.JFrame {
         displayedSort.setModel(new javax.swing.DefaultComboBoxModel<>(new String[]{"Selection", "Bubble", "Quick"}));
         fillArrays();
     }
-    private static int nums1000[] = new int[1000];
+    private static int[] nums10000 = new int[10000];
     private static int nums10[] = new int[10];
+    private static int bLoops,qLoops,sLoops;
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -62,7 +63,7 @@ public class RabeSortingProject extends javax.swing.JFrame {
         btn10.setText("10");
 
         numBtns.add(btn1000);
-        btn1000.setText("1000");
+        btn1000.setText("10000");
 
         jLabel3.setText("Sort Order:");
 
@@ -83,6 +84,11 @@ public class RabeSortingProject extends javax.swing.JFrame {
         });
 
         btnSort.setText("Sort!");
+        btnSort.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnSortActionPerformed(evt);
+            }
+        });
 
         jLabel5.setText("Original Numbers:");
 
@@ -195,6 +201,72 @@ public class RabeSortingProject extends javax.swing.JFrame {
     private void displayedSortActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_displayedSortActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_displayedSortActionPerformed
+
+    private void btnSortActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSortActionPerformed
+        int[] b, q, s;
+        String msg = "";
+        String origMsg = "";
+        double bubbleTime1 = 0,bubbleTime2=0,selectTime1=0,selectTime2=0,quickTime1=0,quickTime2 = 0;
+        qLoops = 0;
+        sLoops = 0;
+        bLoops = 0;
+        if (btn10.isSelected()) {
+            b = nums10.clone();
+            q = nums10.clone();
+            s = nums10.clone();
+            for (int i = 0; i < nums10.length; i++) {
+                origMsg+= i + " : " + nums10[i] + "\n";
+            }
+
+        } else {
+            b = nums10000.clone();
+            q = nums10000.clone();
+            s = nums10000.clone();
+            for (int i = 0; i < nums10000.length; i++) {
+                origMsg+= i + " : " + nums10000[i] + "\n";
+            }
+            
+
+        }
+        origTxt.setText(origMsg);
+        if (btnAscend.isSelected()) {
+            bubbleTime1 = System.nanoTime();
+            ascBubbleSort(b, b.length);
+            bubbleTime2 = System.nanoTime();
+            selectTime1 = System.nanoTime();
+            ascSelectSort(s, s.length);
+            selectTime2 = System.nanoTime();
+            quickTime1 = System.nanoTime();
+            ascQuickSort(q,0,q.length-1);
+            quickTime2 = System.nanoTime();
+
+        } else {
+            descBubbleSort(b, b.length);
+            System.out.println("bubbledone");
+            descSelectSort(s, s.length);
+            System.out.println("selectdone");
+            descQuickSort(q,0,q.length-1);
+            System.out.println("quickdone");
+        }
+        if(displayedSort.getSelectedItem().toString().equalsIgnoreCase("Bubble")){
+            for (int i = 0; i < b.length; i++) {
+                msg+= i + " : " + b[i] + "\n";
+            }
+            
+        }else if(displayedSort.getSelectedItem().toString().equalsIgnoreCase("Quick")){
+            for (int i = 0; i < q.length; i++) {
+                msg+= i + " : " + q[i] + "\n";
+            }
+        }else{
+            for (int i = 0; i < s.length; i++) {
+                msg+= i + " : " + s[i] + "\n";
+            }
+        }
+        newTxt.setText(msg);
+        bigSortTxt.setText("Bubble Sort:\nNumber of times a loop was Executed: \n" + bLoops + "\nNumber of Nanoseconds to complete sort: " + (bubbleTime2-bubbleTime1) + "\n"
+                + "Quick Sort:\nNumber of times a loop was Executed: \n" + qLoops + "\nNumber of Nanoseconds to complete sort: " + (quickTime2-quickTime1) + "\n"
+                        + "Selection Sort:\nNumber of times a loop was Executed: \n" + sLoops + "\nNumber of Nanoseconds to complete sort: " + (selectTime2-selectTime1));
+    }//GEN-LAST:event_btnSortActionPerformed
     /**
      * algorithm to sort the strings using bubble sort
      *
@@ -216,6 +288,7 @@ public class RabeSortingProject extends javax.swing.JFrame {
                     nums[j + 1] = temp;
                     sw = true;
                 }
+                bLoops++;
 
             }
             bottom = bottom - 1;
@@ -228,16 +301,20 @@ public class RabeSortingProject extends javax.swing.JFrame {
         boolean sw = true;
         //loops until it doesn't swap anything around anymore meaning everything must be in place.
         while (sw) {
+            System.out.println("test");
             //var that says if a swap has taken place
             sw = false;
             //loop to continuously put the lexographically smaller string to the right until it hits the end
-            for (int j = 0; j > bottom; j++) {
-                if (nums[j] < nums[j + 1]) {
+            for (int j = 0; j < bottom; j++) {
+                if (nums[j] > nums[j + 1]) {
                     temp = nums[j];
                     nums[j] = nums[j + 1];
                     nums[j + 1] = temp;
                     sw = true;
+                    System.out.println("swapped");
                 }
+                
+                bLoops ++;
 
             }
             bottom = bottom - 1;
@@ -253,6 +330,7 @@ public class RabeSortingProject extends javax.swing.JFrame {
                     nums[i] = nums[j];
                     nums[j] = temp;
                 }
+                sLoops++;
             }
         }
     }
@@ -266,6 +344,7 @@ public class RabeSortingProject extends javax.swing.JFrame {
                     nums[i] = nums[j];
                     nums[j] = temp;
                 }
+                sLoops++;
             }
         }
     }
@@ -282,9 +361,11 @@ public class RabeSortingProject extends javax.swing.JFrame {
         while (i < j) {
             while (a[i] < pivot) {
                 i++;
+                qLoops++;
             }
             while (pivot < a[j]) {
                 j--;
+                qLoops++;
             }
             if (i <= j) {
                 temp = a[i];
@@ -297,28 +378,31 @@ public class RabeSortingProject extends javax.swing.JFrame {
         ascQuickSort(a, left, j);
         ascQuickSort(a, i, right);
     }
-    public static void descQuickSort(int a[], int left, int right) {
 
-        if (left >= right) {
+    public static void descQuickSort(int a[], int right, int left) {
+
+        if (left <= right) {
             return;
         }
         int i = left;
         int j = right;
         int temp;
         int pivot = a[(left + right) / 2];
-        while (i < j) {
+        while (i >= j) {
             while (a[i] < pivot) {
-                i++;
+                i--;
+                qLoops++;
             }
             while (pivot < a[j]) {
-                j--;
+                j++;
+                qLoops++;
             }
             if (i >= j) {
                 temp = a[i];
                 a[i] = a[j];
                 a[j] = temp;
-                i++;
-                j--;
+                i--;
+                j++;
             }
         }
         descQuickSort(a, left, j);
@@ -334,8 +418,8 @@ public class RabeSortingProject extends javax.swing.JFrame {
             }
             f = new File("src/rabesortingproject/10000nums.txt");
             s = new Scanner(f);
-            for (int i = 0; i < 1000; i++) {
-                nums1000[i] = Integer.parseInt(s.nextLine());
+            for (int i = 0; i < 10000; i++) {
+                nums10000[i] = Integer.parseInt(s.nextLine());
             }
         } catch (Exception e) {
             System.out.println("Error: " + e);
