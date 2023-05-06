@@ -301,7 +301,7 @@ public class RabeSortingProject extends javax.swing.JFrame {
         boolean sw = true;
         //loops until it doesn't swap anything around anymore meaning everything must be in place.
         while (sw) {
-            System.out.println("test");
+            
             //var that says if a swap has taken place
             sw = false;
             //loop to continuously put the lexographically smaller string to the right until it hits the end
@@ -311,7 +311,7 @@ public class RabeSortingProject extends javax.swing.JFrame {
                     nums[j] = nums[j + 1];
                     nums[j + 1] = temp;
                     sw = true;
-                    System.out.println("swapped");
+                    
                 }
                 
                 bLoops ++;
@@ -358,7 +358,8 @@ public class RabeSortingProject extends javax.swing.JFrame {
         int j = right;
         int temp;
         int pivot = a[(left + right) / 2];
-        while (i < j) {
+        
+        while (i < j) {//while not finished iterating
             while (a[i] < pivot) {
                 i++;
                 qLoops++;
@@ -379,35 +380,36 @@ public class RabeSortingProject extends javax.swing.JFrame {
         ascQuickSort(a, i, right);
     }
 
-    public static void descQuickSort(int a[], int right, int left) {
-
-        if (left <= right) {
+    public static void descQuickSort(int a[], int left, int right) {
+       if (left >= right) {
             return;
         }
         int i = left;
         int j = right;
         int temp;
         int pivot = a[(left + right) / 2];
-        while (i >= j) {
-            while (a[i] < pivot) {
-                i--;
+        while (i < j) {
+            
+            while (a[i] > pivot) {
+                i++;
                 qLoops++;
             }
-            while (pivot < a[j]) {
-                j++;
+            while (pivot > a[j]) {
+                j--;
                 qLoops++;
             }
-            if (i >= j) {
+            if (i <= j) {
                 temp = a[i];
                 a[i] = a[j];
                 a[j] = temp;
-                i--;
-                j++;
+                i++;
+                j--;
             }
         }
         descQuickSort(a, left, j);
         descQuickSort(a, i, right);
     }
+
 
     public static void fillArrays() {
         File f = new File("src/rabesortingproject/10nums.txt");
