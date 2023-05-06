@@ -12,9 +12,12 @@ public class RabeSortingProject extends javax.swing.JFrame {
 
     public RabeSortingProject() {
         initComponents();
+        //sets the text in the combo box (I could not figure out how to do this in guibuilder for the life of me)
         displayedSort.setModel(new javax.swing.DefaultComboBoxModel<>(new String[]{"Selection", "Bubble", "Quick"}));
+        //method to fill the arrays
         fillArrays();
     }
+    //globar variable declarations
     private static int[] nums10000 = new int[10000];
     private static int nums10[] = new int[10];
     private static int bLoops,qLoops,sLoops;
@@ -201,24 +204,32 @@ public class RabeSortingProject extends javax.swing.JFrame {
     private void displayedSortActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_displayedSortActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_displayedSortActionPerformed
-
+/**
+ * when the sort button is pressed
+ * @param evt 
+ */
     private void btnSortActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSortActionPerformed
         int[] b, q, s;
         String msg = "";
         String origMsg = "";
+        //setting all the times to 0
         double bubbleTime1 = 0,bubbleTime2=0,selectTime1=0,selectTime2=0,quickTime1=0,quickTime2 = 0;
         qLoops = 0;
         sLoops = 0;
         bLoops = 0;
+        //if the button for 10 number array is selected
         if (btn10.isSelected()) {
+            //clone global array to the local arrays
             b = nums10.clone();
             q = nums10.clone();
             s = nums10.clone();
+            //add the original array to the msg for the original array contents
             for (int i = 0; i < nums10.length; i++) {
                 origMsg+= i + " : " + nums10[i] + "\n";
             }
 
         } else {
+            //otherwuse do the same as above for the 10000 number array
             b = nums10000.clone();
             q = nums10000.clone();
             s = nums10000.clone();
@@ -228,7 +239,9 @@ public class RabeSortingProject extends javax.swing.JFrame {
             
 
         }
+        //set the original array text box to the contents of the original array
         origTxt.setText(origMsg);
+        //if the user selects the ascending algorithms
         if (btnAscend.isSelected()) {
             bubbleTime1 = System.nanoTime();
             ascBubbleSort(b, b.length);
@@ -239,15 +252,19 @@ public class RabeSortingProject extends javax.swing.JFrame {
             quickTime1 = System.nanoTime();
             ascQuickSort(q,0,q.length-1);
             quickTime2 = System.nanoTime();
-
+            //if the user selects the descending algorithms (only other option)
         } else {
+            bubbleTime1 = System.nanoTime();
             descBubbleSort(b, b.length);
-            System.out.println("bubbledone");
+            bubbleTime2 = System.nanoTime();
+            selectTime1 = System.nanoTime();
             descSelectSort(s, s.length);
-            System.out.println("selectdone");
+            selectTime2 = System.nanoTime();
+            quickTime1 = System.nanoTime();
             descQuickSort(q,0,q.length-1);
-            System.out.println("quickdone");
+            quickTime2 = System.nanoTime();
         }
+        //if the user wants to see the bubble sorting array output generate output from that sorted array
         if(displayedSort.getSelectedItem().toString().equalsIgnoreCase("Bubble")){
             for (int i = 0; i < b.length; i++) {
                 msg+= i + " : " + b[i] + "\n";
