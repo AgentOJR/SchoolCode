@@ -6,6 +6,7 @@
 package rabesortingproject;
 
 import java.io.File;
+import java.text.DecimalFormat;
 import java.util.Scanner;
 
 public class RabeSortingProject extends javax.swing.JFrame {
@@ -212,6 +213,7 @@ public class RabeSortingProject extends javax.swing.JFrame {
         int[] b, q, s;
         String msg = "";
         String origMsg = "";
+        DecimalFormat num = new DecimalFormat("###,###");
         //setting all the times to 0
         double bubbleTime1 = 0,bubbleTime2=0,selectTime1=0,selectTime2=0,quickTime1=0,quickTime2 = 0;
         qLoops = 0;
@@ -269,20 +271,23 @@ public class RabeSortingProject extends javax.swing.JFrame {
             for (int i = 0; i < b.length; i++) {
                 msg+= i + " : " + b[i] + "\n";
             }
-            
+        //if they want to see the quick sort output    
         }else if(displayedSort.getSelectedItem().toString().equalsIgnoreCase("Quick")){
             for (int i = 0; i < q.length; i++) {
                 msg+= i + " : " + q[i] + "\n";
             }
+            //to see the selection sort output
         }else{
             for (int i = 0; i < s.length; i++) {
                 msg+= i + " : " + s[i] + "\n";
             }
         }
+        //sets the sorted array display to the correct array
         newTxt.setText(msg);
-        bigSortTxt.setText("Bubble Sort:\nNumber of times a loop was Executed: \n" + bLoops + "\nNumber of Nanoseconds to complete sort: " + (bubbleTime2-bubbleTime1) + "\n"
-                + "Quick Sort:\nNumber of times a loop was Executed: \n" + qLoops + "\nNumber of Nanoseconds to complete sort: " + (quickTime2-quickTime1) + "\n"
-                        + "Selection Sort:\nNumber of times a loop was Executed: \n" + sLoops + "\nNumber of Nanoseconds to complete sort: " + (selectTime2-selectTime1));
+        //generates a summary of all of the sorting processes and displays it to the user in the correct field
+        bigSortTxt.setText("Bubble Sort:\nNumber of times a loop was Executed: \n" + num.format(bLoops) + "\nNumber of Nanoseconds to complete sort: " + num.format(bubbleTime2-bubbleTime1) + "\n"
+                + "Quick Sort:\nNumber of times a loop was Executed: \n" + num.format(qLoops) + "\nNumber of Nanoseconds to complete sort: " + num.format(quickTime2-quickTime1) + "\n"
+                        + "Selection Sort:\nNumber of times a loop was Executed: \n" + num.format(sLoops) + "\nNumber of Nanoseconds to complete sort: " + num.format(selectTime2-selectTime1));
     }//GEN-LAST:event_btnSortActionPerformed
     /**
      * algorithm to sort the strings using bubble sort
@@ -297,8 +302,9 @@ public class RabeSortingProject extends javax.swing.JFrame {
         while (sw) {
             //var that says if a swap has taken place
             sw = false;
-            //loop to continuously put the lexographically smaller string to the right until it hits the end
+            //loop to continuously put the  smaller number to the left until it hits the end
             for (int j = 0; j < bottom; j++) {
+                //checking to see if a number is next to one smaller than itself
                 if (nums[j] - nums[j + 1] > 0) {
                     temp = nums[j];
                     nums[j] = nums[j + 1];
@@ -308,6 +314,7 @@ public class RabeSortingProject extends javax.swing.JFrame {
                 bLoops++;
 
             }
+            
             bottom = bottom - 1;
         }
     }
@@ -321,9 +328,10 @@ public class RabeSortingProject extends javax.swing.JFrame {
             
             //var that says if a swap has taken place
             sw = false;
-            //loop to continuously put the lexographically smaller string to the right until it hits the end
+            //loop to continuously put the bigger number to the right until it hits the end
             for (int j = 0; j < bottom; j++) {
-                if (nums[j] > nums[j + 1]) {
+                //checking to see if a number is next to one bigger than itself
+                if (nums[j] < nums[j + 1]) {
                     temp = nums[j];
                     nums[j] = nums[j + 1];
                     nums[j + 1] = temp;
@@ -338,10 +346,18 @@ public class RabeSortingProject extends javax.swing.JFrame {
         }
     }
 
+    /**
+     * method to sort the numbers in ascending order using selection sort
+     * @param nums the array to sort
+     * @param numItems the number of numbers in the array
+     */
     public static void ascSelectSort(int[] nums, int numItems) {
         int temp;
+        //looping for every item in the array
         for (int i = 0; i < numItems - 1; i++) {
+            //looping one item ahead of i
             for (int j = i + 1; j < numItems; j++) {
+                //comparing the 2 and if the bigger one is in the wrong place swap the 2
                 if (nums[i] > nums[j]) {
                     temp = nums[i];
                     nums[i] = nums[j];
@@ -352,10 +368,18 @@ public class RabeSortingProject extends javax.swing.JFrame {
         }
     }
 
+    /**
+     * a method to sort the contents of an array in descending order using selection sorting
+     * @param nums the array to be sorted
+     * @param numItems the number of entries in the array
+     */
     public static void descSelectSort(int[] nums, int numItems) {
         int temp;
+        //looping for every item in the array
         for (int i = 0; i < numItems - 1; i++) {
+            //looping one item ahead of i
             for (int j = i + 1; j < numItems; j++) {
+                //comparing the 2 and if the smaller one is in the wrong place swap the 2
                 if (nums[i] < nums[j]) {
                     temp = nums[i];
                     nums[i] = nums[j];
@@ -366,25 +390,36 @@ public class RabeSortingProject extends javax.swing.JFrame {
         }
     }
 
+    /**
+     * a method to sort an array in ascending order using quick sort
+     * @param a the array to sort
+     * @param left the smallest index of the current partition
+     * @param right the largest index of the current partition
+     */
     public static void ascQuickSort(int a[], int left, int right) {
 
+        //base case, if the partitions have hit a length of 1 entry
         if (left >= right) {
             return;
         }
         int i = left;
         int j = right;
         int temp;
+        //determining a pivot for the algorithm to use, in this case the middle because why not
         int pivot = a[(left + right) / 2];
         
         while (i < j) {//while not finished iterating
+            //looping until it finds an entry on the wrong side of the pivot
             while (a[i] < pivot) {
                 i++;
                 qLoops++;
             }
+            //lopping until it finds an entry on the wrong other side of the pivot
             while (pivot < a[j]) {
                 j--;
                 qLoops++;
             }
+            //swap the 2 entries places
             if (i <= j) {
                 temp = a[i];
                 a[i] = a[j];
@@ -393,10 +428,17 @@ public class RabeSortingProject extends javax.swing.JFrame {
                 j--;
             }
         }
+        //recursive calls to sort the new halves of the array
         ascQuickSort(a, left, j);
         ascQuickSort(a, i, right);
     }
 
+    /**
+     * method to sort an array to descending order using quick sort
+     * @param a
+     * @param left
+     * @param right 
+     */
     public static void descQuickSort(int a[], int left, int right) {
        if (left >= right) {
             return;
