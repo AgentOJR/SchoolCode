@@ -18,7 +18,7 @@ public class RabeSortingProject extends javax.swing.JFrame {
         //method to fill the arrays
         fillArrays();
     }
-    //globar variable declarations
+    //global variable declarations
     private static int[] nums10000 = new int[10000];
     private static int nums10[] = new int[10];
     private static int bLoops,qLoops,sLoops;
@@ -203,7 +203,7 @@ public class RabeSortingProject extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void displayedSortActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_displayedSortActionPerformed
-        // TODO add your handling code here:
+        
     }//GEN-LAST:event_displayedSortActionPerformed
 /**
  * when the sort button is pressed
@@ -435,11 +435,12 @@ public class RabeSortingProject extends javax.swing.JFrame {
 
     /**
      * method to sort an array to descending order using quick sort
-     * @param a
-     * @param left
-     * @param right 
+     * @param a the array to sort
+     * @param left the smallest index of the current partition
+     * @param right the smallest index of the current partition
      */
     public static void descQuickSort(int a[], int left, int right) {
+        // base case, if the partitions have hit a length of 1 entry
        if (left >= right) {
             return;
         }
@@ -447,16 +448,19 @@ public class RabeSortingProject extends javax.swing.JFrame {
         int j = right;
         int temp;
         int pivot = a[(left + right) / 2];
+        // while not finished iterating
         while (i < j) {
-            
+            // looping until it finds an entry on the wrong side of the pivot
             while (a[i] > pivot) {
                 i++;
                 qLoops++;
             }
+            // looping until it finds an entry on the wrong other side of the pivot
             while (pivot > a[j]) {
                 j--;
                 qLoops++;
             }
+            // swap the 2 entries places
             if (i <= j) {
                 temp = a[i];
                 a[i] = a[j];
@@ -465,23 +469,31 @@ public class RabeSortingProject extends javax.swing.JFrame {
                 j--;
             }
         }
+        // recursive calls to sort the new halves of the array
         descQuickSort(a, left, j);
         descQuickSort(a, i, right);
     }
 
 
+    /**
+     *  method to fill the arrays with the numbers in the file
+     */
     public static void fillArrays() {
         File f = new File("src/rabesortingproject/10nums.txt");
         try {
             Scanner s = new Scanner(f);
+            // loop to fill the 10 nums array
             for (int i = 0; i < 10; i++) {
                 nums10[i] = Integer.parseInt(s.nextLine());
             }
             f = new File("src/rabesortingproject/10000nums.txt");
+            s.close();
             s = new Scanner(f);
+            // loop to fill the 10000 nums array
             for (int i = 0; i < 10000; i++) {
                 nums10000[i] = Integer.parseInt(s.nextLine());
             }
+            s.close();
         } catch (Exception e) {
             System.out.println("Error: " + e);
         }
